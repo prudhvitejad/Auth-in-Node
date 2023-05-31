@@ -274,21 +274,21 @@ Eg: Since the user can always delete any of their cookies, local storage or sess
 -> Local storage and session storage are very similar in how they interact and they're only different in a few instances while cookies are almost completely different than the other two 
    and are also quite a bit older than the other two 
 ```
--------------------------------------------------------------------------------------------------------------------------------------
-|					|		Cookies		|		Local Storage		|		Session Storage		|
--------------------------------------------------------------------------------------------------------------------------------------
-|	Capacity			|		4kb			|		10mb				|		5mb				|
--------------------------------------------------------------------------------------------------------------------------------------
-|	Browsers			|		HTML4/HTML5		|		HTML5				|		HTML5				|
--------------------------------------------------------------------------------------------------------------------------------------
-|	Accessible from		|		Any window		|		Any window			|		Same tab			|
--------------------------------------------------------------------------------------------------------------------------------------
-|	Expires			|		Manually Set	|		Never				|		On tab close		|
--------------------------------------------------------------------------------------------------------------------------------------
-|	Storage Location		|		Browser & server	|		Browser only		|		Browser only		|
--------------------------------------------------------------------------------------------------------------------------------------
-|	Sent with requests	|		Yes			|		No				|		No				|
--------------------------------------------------------------------------------------------------------------------------------------	
+---------------------------------------------------------------------------------------------------------
+|				|	Cookies		|	Local Storage	|	Session Storage	|
+---------------------------------------------------------------------------------------------------------
+|	Capacity		|	4kb		|	10mb		|	5mb		|
+---------------------------------------------------------------------------------------------------------
+|	Browsers		|	HTML4/HTML5	|	HTML5		|	HTML5		|
+---------------------------------------------------------------------------------------------------------
+|	Accessible from		|	Any window	|	Any window	|	Same tab	|
+---------------------------------------------------------------------------------------------------------
+|	Expires			|	Manually Set	|	Never		|	On tab close	|
+---------------------------------------------------------------------------------------------------------
+|	Storage Location 	|	Browser & server|	Browser only	|	Browser only	|
+---------------------------------------------------------------------------------------------------------
+|	Sent with requests	|	Yes		|	No		|	No		|
+---------------------------------------------------------------------------------------------------------	
 ```		
 
 
@@ -657,18 +657,18 @@ morgan - which simply locks the request inside the console
 -> Now a hashing algorithm takes in a text password and it generates a longer more seemingly random string
 -> So we can think of this as a bit like a coded password
 ```
-			       -------------------
+		       -------------------
 test1234	------| Hashing Algorithm |-------   A6g34934md....
-			       -------------------
+		       -------------------
 ```
 -> It's already a bit more secure but this alone isn't enough because hackers can reverse engineer simple hashed passwords
 -> So another step is to generate something called a 'Salt' and attach it to the password before it's hashed
 -> Salt is a string of characters separate from the password itself so then the end result is a hashed-password and salt combination which is then stored in the database
 
 ```
- 				       -------------------
+ 		       -------------------
 hAjfgtest1234	------| Hashing Algorithm |-------    $5.6A6g34c9....
-  |				       -------------------
+  |		       -------------------
   |
    -- salt(hAjfg)
 ```
