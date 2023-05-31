@@ -1,0 +1,29 @@
+MVC(Model View Controller) pattern:
+-----------------------------------
+-> In MVC architecture/MVC pattern all the Model related files should be under 'models' folder, all the view related files should be under 'views' folder and all the action/controller related files should be under 'controllers' folder
+-> All the configuration/connection-setup related files should be under 'helpers/config' folder
+-> In the 'routes' folder, we should import the only related functions here and all the implementations/handler functions should be under the 'actions/controllers' folder
+
+
+Naming Convention:
+------------------
+|
+|- Controllers
+|	|
+|	|- Auth.Controller.js
+|
+|- helpers/config
+|	|
+|	|- init_mongodb.js
+|	|- init_redis.js
+|	|- jwt_helper.js
+|
+|- Models
+|	|
+|	|- User.model.js
+|
+|- Routes
+|	|
+|	|- Auth.route.js
+
+

@@ -1,0 +1,3 @@
+To manage the authentication system, we will be using json web tokens or jwts for short and they are just one way in which we can implement authentication 
+It's a very popular way to implement auth into websites and rest apis and it's also extremely flexible too
+Another way to add authentication to our website would be to use sessions

@@ -1,0 +1,26 @@
+How password hashing works under the hood:
+-----------------------------------------
+-> When we're hashing a password there's actually 2 steps involved at a basic level
+-> One of those steps is to run our password through a hashing algorithm 
+-> Now a hashing algorithm takes in a text password and it generates a longer more seemingly random string
+-> So we can think of this as a bit like a coded password
+
+			 -------------------
+test1234	------| Hashing Algorithm |------- A6g34934md....
+			 -------------------
+
+-> It's already a bit more secure but this alone isn't enough because hackers can reverse engineer simple hashed passwords
+-> So another step is to generate something called a 'Salt' and attach it to the password before it's hashed
+-> Salt is a string of characters separate from the password itself so then the end result is a hashed-password and salt combination which is then stored in the database
+
+
+ 				 -------------------
+hAjfgtest1234	------| Hashing Algorithm |------- $5.6A6g34c9....
+  |				 -------------------
+  |
+   -- salt(hAjfg)
+
+-> When a user later tries to log in to authenticate themselves, we would take the password they enter to log in with, add the salt to that password, hash it through the same hashing algorithm
+-> Then we compare it with their hashed-password stored in their database which was generated when they signed up, if they match then we know that it's the correct password and we log them in
+-> If they don't match then they're not logged in
+

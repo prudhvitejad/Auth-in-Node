@@ -1,0 +1,15 @@
+Node and Express - Cookies
+--------------------------
+-> cookie is a small piece of data stored on the client and after a cookie is set in the client, it is sent alongside every request until it expires or gets cleared
+
+-> cookie-parser is a middleware that parses cookies attached to the request object and it is similar to the express.json middleware for parsing cookies instead of request payloads
+-> Similar to how express.json middleware parses a post request payload and places it inside the body of the request, the cookie-parser middleware parses cookies attached to their request and places them inside request.cookies
+
+-> In the login route, we can set the cookies
+	Eg: res.cookie('username', username , {secure: true});
+
+-> In the logout route, we can clear the cookies
+	Eg: res.clearCookie('username');
+	    res.redirect('/login');
+
+

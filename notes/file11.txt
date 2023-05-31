@@ -1,0 +1,29 @@
+Blacklisting Refresh Tokens using Redis:
+---------------------------------------
+-> Whenever we sign a new refresh-token because whenever we sign a new refresh-token or we generate a new refresh-token, we want to store it inside Redis cache so that at some point later down if we want to blacklist a token then we have the userId as the key and the value would be the refresh-token
+
+-> While generating the refresh-token before resolving it, firstly we want to save it inside our Redis cache
+
+//to insert the data into the redis DB
+client.SET(userId, token, 'EX', 365*24*60*60, (err, reply) => {
+	if(err) {
+      	console.log(err.message);
+            reject(createError.InternalServerError());
+            return;
+	}
+      resolve(token);    
+});  
+
+-> While verifying the refresh-token, firstly we want to get the data from redis DB and compare it with them
+
+//to get data from the redis DB
+client.GET(userId, (err, result) => {
+	if(err) {
+      	console.log(err.message);
+            reject(createError.InternalServerError());
+            return;
+	}
+      if(refreshToken === result)
+      	return resolve(userId); 
+      reject(createError.Unauthorized());
+});

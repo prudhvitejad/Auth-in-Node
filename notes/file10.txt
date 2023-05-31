@@ -1,0 +1,28 @@
+Introduction about Redis:
+------------------------
+-> Redis stands for REmote DIctionary Server
+-> Redis is developed in 2009 and it is Open Source.
+-> Redis is a data-structure server.
+-> Redis is In-Memory data-structure store and used as DB, Cache, Message Broker.
+-> Redis allows the user to store vast amounts of data without the limits of a relational database.
+-> Redis is NOSQL DB
+-> Unlike traditional databases that run on a computer’s hard disk and store all of their data on disk, Redis runs inside of a system’s working memory (RAM). 
+-> This allows Redis to be incredibly fast at fetching data, which is why it’s often used as a cache on top of other databases to improve application performance.
+
+-> To work with redis or to see what's inside redis in-memory database, we need to install the redis-commander npm package globally so that we can view our redis database in a GUI tool that opens up in a browser
+
+	//To install redis-commander globally
+	npm i -g redis-commander
+
+-> redis-commander is used to view what's all inside the redis database that is present locally in our computer
+-> To run the redis-commander, we simply enter the "redis-commander" in cmd and press enter then we can access the browser at localhost:8081  
+-> To connect the redis database using cli, we simply enter the command "redis-cli" and press enter then we can work on redis database using command line
+
+
+Note:
+-----
+-> If service is already running we will get the error.
+-> As per need we can restart service by below commands:
+
+redis-server --service-stop
+redis-server redis.windows.conf

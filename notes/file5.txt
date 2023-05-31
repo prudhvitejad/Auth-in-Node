@@ -1,0 +1,13 @@
+generating the secret key for the Access token and the Refresh token:
+--------------------------------------------------------------------
+-> To generate the secret key for the Access token and the Refresh token
+Eg:
+const crypto = require('crypto');   //built-in nodejs module
+
+const key1 = crypto.randomBytes(32).toString('hex');
+console.log("key1 = ",key1);
+const key2 = crypto.randomBytes(32).toString('hex');
+console.log("key2 = ",key2);
+
+-> Whenever we think our application is being misused, then we need to generate a new pair of keys for the Access token and the Refresh token and then we should put them inside our environment file and all the tokens which we are generated before  i.e., the Access token and the Refresh token, both the tokens would be invalidated because the key has been changed inside the environment file
+

@@ -1,0 +1,31 @@
+Logging In Users:
+----------------
+-> We want to take the credentials provided and then we want to look for that user with that email in the database
+-> Once we've got that user then we want to compare the provided password with the hashed-password
+-> So we take the password they try to login with and we hash it and we compare it with the hashed-password stored in the database for the user with that email
+-> If they match then it means the password is correct and we can log them in and create the jsonwebtoken for them and send it back to the browser
+-> If it's incorrect or if they don't match then we don't log them in and we send back some kind of error to the user like incorrect password
+-> We want to basically take credentials and compare them with the email and password in the database and then create a jsonwebtoken
+-> It would be nice if we could do something like this on the user model
+-> mongoose doesn't come with the ability to login users for us, we have to create the method by ourselves and we can create the static method on a model when we create a model
+-> Or we can create anywhere else also, it's just a function and we can create anywhere we wish
+Eg:
+---
+
+//static method to login the user
+userSchema.statics.login = async function(email,password) {
+	const user = await this.findOne({email});
+	if(user) {
+		const hashedPassword = user.password;
+		const auth = await bcrypt.compare(password,hashedPassword);
+	
+		if(auth) {
+			return user;
+		}
+		throw Error('incorrect password');
+	}
+	throw Error('incorrect email');
+}
+
+
+

@@ -1,0 +1,38 @@
+Using Refresh Tokens to generate New tokens:
+-------------------------------------------
+-> We want to use the refresh-token only when the access token has been expired and the client gets a message back from the server that the request is unauthorized and the JWT is expired
+-> So we can check that on client-side and then we can send back a request with this refresh-token inside the request body to the server back
+-> When we are doing the blacklisting of the tokens that is the refresh-tokens then we need to do something more inside the verifyRefreshToken() but for now we simply resolve the promise by simply resolving the userId
+Eg:
+---
+//generate refresh-token
+router.post("/auth/refresh-token",async(req,res,next) => {
+    try {
+        const {refreshToken} = req.body;
+        if(!refreshToken) 
+            throw createError.BadRequest();
+        const userId = await verifyRefreshToken(refreshToken);
+
+        const accessToken = await signAccessToken(userId);
+        const refToken = await signRefreshToken(userId);
+
+        res.send({accessToken:accessToken, refreshToken:refToken});
+    } catch(err) {
+        next(err);
+    }
+});
+
+verifyRefreshToken: (refreshToken) => {
+        return new Promise((resolve,reject) => {
+            JWT.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,payload) => {
+                if(err)
+                    return reject(createError.Unauthorized());
+                
+                const userId = payload.aud; //while generating refresh-token we are using userId in the options object and that will be stored in the payload
+                resolve(userId);   
+            })
+        })
+}
+
+
+

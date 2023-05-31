@@ -1,0 +1,28 @@
+Generating Refresh Tokens:
+-------------------------
+-> After a certain period of time our access tokens would be expired 
+-> And we do not want the client to login back again inside our application but instead we should automatically refresh those access tokens with a new pair of access token and refresh token
+Eg:
+---
+signRefreshToken: (userId) => {
+        return new Promise((resolve,reject) => {
+            const payload = {}
+            const secret = process.env.REFRESH_TOKEN_SECRET;
+            const options = {
+                expiresIn: '1y',
+                issuer: 'auth_tutorial project',
+                audience: userId,
+            }
+
+            JWT.sign(payload,secret,options, (err,token) => {
+                if(err)  {
+                    console.log(err.message);
+                    //return reject(err)
+                    return reject(createError.InternalServerError());
+                }
+                resolve(token)
+            })
+        }) 
+    }
+
+-> If we do not provide the expiration time then it would be the lifetime or until we change the 'secret' inside our application 

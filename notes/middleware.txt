@@ -1,0 +1,161 @@
+-> Middleware is a function or program or something that is going to run b/w the time that the server gets the request and the time that the server sends the request out to the client
+-> next is a function and all we need to do with the next function is we should/can call it
+-> next() means go to next request handler
+-> if we define a function and declared it as a middleware using app.use(<functionName>) in the top of all routes then it becomes the Global Middleware and  it will be called before any of the route is called and then the actual route will be called
+-> if we define a function and declared it as a middleware using app.use(<functionName>) in the bottom of all routes then first the actual route is called and if that route is calling next() then that middleware will be called
+-> we can use middleware functions in routes-level also, if we define a function and if we call that middleware function in the route then that middleware would be called first and then the actual route
+
+Eg:(i)
+------
+const express = require("express");						const express = require("express");
+
+const app = express();								const app = express();
+
+app.get("/", (req,res,next) => {						function func1(req,res,next) {
+										    console.log("Inside standard express route");
+										}
+    console.log("Inside standard express route");		(OR)		
+});										app.get("/", func1);
+
+app.listen(3000);								app.listen(3000);
+
+Output:										Output:
+------										------
+Inside standard express route							Inside standard express route
+
+
+Eg:(ii)
+-------
+app.get('/users', auth, (req,res) => {
+     ......
+})
+
+function auth(req,res,next) {
+    if(req.query.admin === 'true') {
+        req.admin = true
+        next()
+    }
+    else
+        res.send('No Permission to view for the user')
+}
+
+Note:
+-----
+-> If we are using more than 1 middleware at global-level then we should use next() in every middleware function otherwise they will get confusion thinking which is the next operation we should do and our app crashes by loading and loading the page
+
+
+Eg:(iii)
+--------
+const express = require("express");
+
+const app = express();
+
+app.use(middlewareFunc2);
+app.use(middlewareFunc1);
+
+function func1(req,res,next) {
+    console.log("Inside standard express route");
+}
+
+function middlewareFunc1(req,res,next) {
+    console.log("Inside standard express middleware function1");
+    next();
+}
+
+function middlewareFunc2(req,res,next) {
+    console.log("Inside standard express middleware function2");
+    next();
+}
+
+function middlewareFunc3(req,res,next) {
+    console.log("Inside standard express middleware function3");
+    next();
+}
+
+function middlewareFunc4(req,res,next) {
+    console.log("Inside standard express middleware function4");
+    next();
+}
+
+function middlewareFunc5(req,res,next) {
+    console.log("Inside standard express middleware function5");
+    next();
+}
+
+app.get("/", middlewareFunc3, func1);
+
+app.use(middlewareFunc5);
+app.use(middlewareFunc4);
+
+app.listen(3000);
+
+Output:
+---------
+Inside standard express middleware function2
+Inside standard express middleware function1
+Inside standard express middleware function3
+Inside standard express route
+
+
+Eg:(iv)
+-------
+const express = require("express");
+
+const app = express();
+
+app.use(middlewareFunc2);
+app.use(middlewareFunc1);
+
+function func1(req,res,next) {
+    console.log("Inside standard express route");
+    next();
+}
+
+function middlewareFunc1(req,res,next) {
+    console.log("Inside standard express middleware function1");
+    next();
+}
+
+function middlewareFunc2(req,res,next) {
+    console.log("Inside standard express middleware function2");
+    next();
+}
+
+function middlewareFunc3(req,res,next) {
+    console.log("Inside standard express middleware function3");
+    next();
+}
+
+function middlewareFunc4(req,res,next) {
+    console.log("Inside standard express middleware function4");
+    next();
+}
+
+function middlewareFunc5(req,res,next) {
+    console.log("Inside standard express middleware function5");
+    next();
+}
+
+app.get("/", middlewareFunc3, func1);
+
+app.use(middlewareFunc5);
+app.use(middlewareFunc4);
+
+app.listen(3000);
+
+Output:
+---------
+Inside standard express middleware function2
+Inside standard express middleware function1
+Inside standard express middleware function3
+Inside standard express route
+Inside standard express middleware function5
+Inside standard express middleware function4
+
+
+
+
+
+
+
+

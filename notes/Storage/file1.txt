@@ -1,0 +1,90 @@
+Cookies vs Local Storage vs Session Storage:
+-------------------------------------------
+-> There are 3 main ways to store data inside of a browser which are 
+	(i)local storage 
+	(ii)session storage and
+	(iii)cookies 
+
+-> All 3 of them are being stored on the user's actual browser that they're using 
+-> If they're using Google Chrome, it'll be stored in their Google Chrome, if they're using Firefox, it'll be stored in their Firefox and so on 
+-> So that means that any cookies or local storage or any of that's saved on a user's browser for eg. Chrome will not be available on another browser on their same computer for eg. Firefox 
+-> So it's browser independent, also users do not share cookies and local storage between them
+-> So if we set the local storage for a certain user, none of the other users of that site will be able to see that because it's stored on that user's computer only and nowhere else, so this is really meant for storing information related to a single user and it's not important if this information gets lost
+Eg: Since the user can always delete any of their cookies, local storage or session storage at any time
+
+
+-> Local storage and session storage are very similar in how they interact and they're only different in a few instances while cookies are almost completely different than the other two 
+   and are also quite a bit older than the other two 
+
+-------------------------------------------------------------------------------------------------------------------------------------
+|					|		Cookies		|		Local Storage		|		Session Storage		|
+-------------------------------------------------------------------------------------------------------------------------------------
+|	Capacity			|		4kb			|		10mb				|		5mb				|
+-------------------------------------------------------------------------------------------------------------------------------------
+|	Browsers			|		HTML4/HTML5		|		HTML5				|		HTML5				|
+-------------------------------------------------------------------------------------------------------------------------------------
+|	Accessible from		|		Any window		|		Any window			|		Same tab			|
+-------------------------------------------------------------------------------------------------------------------------------------
+|	Expires			|		Manually Set	|		Never				|		On tab close		|
+-------------------------------------------------------------------------------------------------------------------------------------
+|	Storage Location		|		Browser & server	|		Browser only		|		Browser only		|
+-------------------------------------------------------------------------------------------------------------------------------------
+|	Sent with requests	|		Yes			|		No				|		No				|
+-------------------------------------------------------------------------------------------------------------------------------------			
+
+
+-> cookies can store only a much smaller amount of information, the capacity is 4 kilobytes for most browsers while local storage and session storage can hold 10 megabits and 5 megabits
+   respectively this means that cookies are going to be much smaller than local storage and session storage but that's okay for their use cases 
+-> Also cookies are supported in older browsers which support HTML4 because they're been around for much longer but that's not really something you have to worry about because HTML5 is in 
+   pretty much any browser being used now 
+-> cookies and local storage are available for any window inside the browser, so if we have Google Chrome open on one tab or another tab the cookies are going to be available on all the 
+   different tabs that we have open to that website while session storage is only available in the single tab that we have open and it won't be available if we open another tab
+
+
+-> Session storage is for the one browsing session which is why it's called Session storage and it is removed as soon as the user closes the tab where that session was set 
+-> While Local storage is around forever until the user ends up deleting it or delete it ourself inside of the code
+-> For cookies, we actually have to set when they expire. Usually we'll either set an infinite expiration for example a year, very very far in the future or if we want it to expire in a 
+certain timeframe to see if the user has done something in that timeframe but we have complete control over when the cookie actually expires
+
+-> As for storage location, local storage and session storage are both on the browser but cookies while they are stored in the browser they are sent to the server every time a user requests something from the server, whether it's an image,HTML file, CSS file or anything 
+-> The cookies get sent along with the request which is why they have a much smaller capacity
+because all the information in the cookies gets sent to the server
+-> If we have a lot of cookies that are really large, it'll slow down our request to the server and the requests coming back from the server, this is why we want to make sure the cookies that we use are small and as limited as possible so that we don't slow down the request any more than we need 
+-> It also makes cookies really good for doing certain authentication related tasks because they actually get sent to the browser or to the server from the browser unlike local storage or session storage 
+ 
+-> For the most part, if we're going to be storing something in the user's browser, we almost always want to use Local storage or Session storage depending on how long we want it to live whether we want it to be for one session or if we want it to live after they close the browser and we only really want to use cookies if we need the aspect of sending it to the server because if we don't need to send it to a server then we just adding extra header and cookies are much harder to deal with so we should always use local storage or session storage unless we need to send it to the server
+
+
+-> If we wanted to start messing around with the actual different storage mechanisms of local storage, session storage and cookies, we need to figure out where we can view that information 
+	google chrome -> dev tools -> application
+This is the scetion where all that information is going to be stored
+
+-> At the beginning, all 3 of these will be pretty much empty
+-> To get started,let's start with creating some variables and adding them to our local storage 
+-> In order to do that we need to access the 'localStorage' variable in JavaScript
+	
+Eg:  
+localStorage.setItem('name','Prudhvi');	//for setting/inserting values
+localStorage.setItem('name','Teja');	//for updating values
+localStorage.getItem('name');		//for getting values
+localStorage.removeItem('name');	//for removing values
+
+-> session storage works exactly the same as local storage and all the methods are exactly the same and we just need to use the 'sessionStorage' object instead of 'localStorage'
+-> Session storage and local storage are really straightforward to get work with and we can kind of think of them as like a JSON object or a JavaScript object we'll have key-value pairs that we can interact with by setting them and removing them and updating them
+
+-> cookies are much more complicated and quite a bit different to work with than session storage and local storage
+-> Unlike session storage and local storage, cookies don't have a very nice interface for interacting with them, the only way we have to interact with cookies is through the 'document.cookie' object and this object both will allow us to see all the cookies and set new cookies 
+-> If we wanted to create a new cookie, we would just set the value of cookie equal to the cookie we want to set 
+eg: document.cookie = "name=Prudhvi"
+-> If we wanted to set an expiration date for our cookie, all we have to do is specify when we want it to expire
+eg: document.cookie = "name=Prudhvi; expires=" + new Date(2023,11,21).toUTCString();
+    document.cookie = "lastName=Teja; expires=" + new Date(2023,11,21).toUTCString();
+
+-> If we want to view the cookies, there is no good way to view the cookies other than viewing all of the cookie information all at once
+-> The only way we have to view is through the 'document.cookie' object
+eg:	console.log(document.cookie);	// name=Prudhvi; lastName=Teja
+
+
+
+
+

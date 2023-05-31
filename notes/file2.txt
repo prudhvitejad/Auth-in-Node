@@ -1,0 +1,32 @@
+JSON Web Tokens:
+---------------
+-> JWT(json web token) which is basically an encoded long string of characters made up of 3 parts
+	(i)token header - which is a bit like metadata for the token
+	(ii)payload	- the data that is encoded into the jwt and this could be a user-id to identify the user so that when it's decoded on the server we know which user is going to be logged 			  in now and it's important that no sensitive data is put inside this payload
+	(iii)signature - the thing that kind of ties everything(header+payload+secret) together and that is used to verify the token on the server
+
+-> When our server is creating the JWT after a user successfully login or signup then it creates the header part and the payload part first and encodes them both then to sign the token or to add the signature it takes both of those two parts and it hashes them together with something called a secret which is a secure secret string stored on the server
+-> This secret must remain a secret because it's the key to unlocking the JWT and the only way to verify a token 
+-> So we would never publish the secret to any kind of public repository where anyone could see it
+-> So when those 3 things are hashed together it creates the token-signature and that token-signature is then added to the end of the JWT after the other two parts and it can be sent to the browser
+-> The actual hashed resulting token would look something like
+			Headers.Payload.Signature
+
+-> JWT is then added into a cookie and sent and stored in a browser
+-> So for any subsequent request to the server the token is then received by the server inside that cookie 
+-> The server can then verify the token on every request by looking at the header and the payload and hashing them with the secret which remember is stored on the server
+-> If the hashed value of those 2 things with the secret matches the signature which is also the hashed value of those 2 parts and the secret it knows then that it's valid and the JWT has not been tampered(tharu maru cheyadam) with on the client 
+-> If the JWT had been tampered with on the client, for example if the data in the payload is modified then those 2 parts either the header or the payload would have been changed the encoded parts and when they're hashed together with the secret they would not match whatever the token-signature is and therefore we would say hey you're not logged in or you're not authenticated anymore
+-> So this whole process of signing and verifying JWTs might sound a little bit complicated but with the help of the 'jsonwebtoken' package, it's actually very easy to implement
+
+Note:
+-----
+-> The 'jsonwebtoken' package works on callbacks and there are no promises support
+-> So if we want promises support what we can do is, we can use our own Promises
+
+
+
+
+
+
+

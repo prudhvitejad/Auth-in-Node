@@ -1,0 +1,73 @@
+-> When a client makes a request to the server that is he/she makes a register or login request with his/her username and password the server checks if the username and password is valid
+-> If it is valid then server will send back a pair of tokens that is the "Access tokens" and the "Refresh tokens"
+-> To access any protected-route the client will send his access token as the authorization header to the server and the server verifies whether the authorization header is valid that is the access token is valid and if the access token is valid the server will send back the response 
+-> If the token is not valid the server will send back a 401 forbidden response which means or which has the message that is the JWT is expired
+-> And then what the client will do is, the client will send back the server again a request which contains the Refresh token in the request body and then the server verifies that refresh token and if that refresh token is valid then what the server will do server is it will
+again send back the client a pair of access token and a new refresh token not the old refresh token but a new refresh token and if the Refresh token is not
+valid or the Refresh token is blacklisted the server will send back HTTP response of 403 that is Unauthorized 
+
+
+Q) Why do we need two tokens ?
+
+-> After a successful authentication we are sending back 2 tokens to the client containing the client ID in the payload of the audience claim
+
+-> It's typical to keep our Refresh tokens validity for so long because they are used to refresh the access tokens
+
+-> We use the access token to access the protected route but we use the Refresh tokens to get a new pair of access token and refresh token when the access token has been expired 
+-> And since our access token has a validity of only a single hour so it can easily expire
+-> Therefore, the Refresh tokens are simply used to get a new pair of access token and refresh token
+
+-> The Refresh token would be firstly verified that if the Refresh token is valid and secondly it would be checked inside the database that is inside Redis, whether this refresh token exists there
+-> If this refresh token exists there then only it will send a new pair 
+-> And after sending a new pair what the server will do is, it will keep that refresh token that is the new refresh token and it will overwrite the old refresh token so that the old refresh token never existed in the server or it has been overwritten by the new refresh token
+
+-> So if any new request is made by the old refresh token the server will see that the token is valid but it is not present inside redis so it will again send back a 403 response 
+-> Here we are making two checks 
+	firstly whether the token is valid or not and 
+	secondly whether the token exists in Redis or not 
+
+-> And to logout the user we can simply remove the access token and refresh token from the client side 
+-> As well as, we will also remove the refresh token from Redis database as well that is from the server
+
+
+NPM packages needed to make an authentication API
+-------------------------------------------------
+-> jsonwebtoken is mainly used for authentication
+-> joi is for a schema validation
+-> bcrypt that uses Blowfish algorithm to encrypt our passwords
+-> dotenv package to store our environment variables
+-> nodemon, which simply restarts the application
+-> morgan, which simply locks the request inside the console
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

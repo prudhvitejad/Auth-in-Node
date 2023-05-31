@@ -1,0 +1,35 @@
+Verifying an Access Token:
+--------------------------
+-> To protect the route so that only the authenticated users are able to access the route, firstly we need to send the authentication token or the access token in the request headers
+-> The authorization header should be present inside each and every request which goes to a protected route and this authorization header should contain the token
+-> We should not simply paste a token but it has a certain format, so for that we have to write the "Bearer" first and then we need to provide the token
+-> Let's quickly generate a token through logging-in
+-> This is how we should send our request to a protected route
+Eg:
+---
+GET http://localhost:4000/...
+Authorization: Bearer eyJhbG...
+
+
+-> We are going to use the token inside a middleware that will be putting and to verify that token inside our application what we need to do is, create one more middleware function
+-> If the token is verified, we can simply call it next() or if the token is invalid or the token has some error then we can simply call next() with the error parameter
+Eg:
+---
+verifyAccessToken: (req,res,next) => {
+        if(!req.headers['authorization'])
+            return next(createError.Unauthorized());
+        
+        const authHeader = req.headers['authorization'];
+        const bearerToken = authHeader.split(' ');
+        const token = bearerToken[1];
+        
+        JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+            if(err) {
+               const message = err.name === 'JsonWebTokenError' ? 'Unauthorized' : err.message;
+               return next(createError.Unauthorized(message));
+            }
+            req.payload = payload;
+            next();
+        });
+}
+

@@ -1,0 +1,16 @@
+Authentication Vs Authorization
+-------------------------------
+They both are related but they are the separate entities
+
+Authentication:
+--------------
+Authentication is a process to prove that you are the authentic person or not.
+Eg:
+---
+When you try to login to your Gmail account and when you provide correct username and password definitely it will give the access and you can access your Gmail account. If you provide incorrect credentials definitely it will throw the error and ask you to login again. This is called Authentication 
+
+Authorization:
+-------------
+-> Authorization is when you login to your Google account we have multiple products like Gmail, YouTube, Google drive etc 
+-> Google also have certain products which are paid like Google AdWords, Google search places etc 
+-> Once you paid some amount of money then only you can access that particular product, so you are not authorised but you are authentic person but you are not authorised to use that particular product

@@ -1,0 +1,57 @@
+Note:
+-----
+-> express-session middleware setup
+
+const session = require('express-session');
+app.use(session({
+	secret: '....',
+	cookie: {
+		sameSite: 'strict',
+	}
+}));
+
+-> In the login route, we will store the session details
+Eg(login route):
+---------------
+{
+	if(req.body.username && req.body.password) {
+		const {username,password} = req.body;
+		
+		let user = await User.findOne({
+			where: {username,password}
+		});
+
+		if(user) {
+			req.session.user = user;
+			req.session.authorized = true;
+			res.render(...);
+		}
+		else {
+			res.render('login');
+		}
+	}
+}
+
+
+-> After storing session details through login route, we will authenticate all the protected routes 
+Eg:
+--
+app.get('/', (req,res,next) => {
+	if(req.session.authorized) {
+		res.render(...);
+	}
+	else {
+		res.render('login');
+	}
+});
+
+
+-> In the logout route, we will delete the stored details
+Eg:
+--
+app.get('logout', (req,res,next) => {
+	req.session.destroy();
+	res.redirect('/login');
+});
+
+

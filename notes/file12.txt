@@ -1,0 +1,13 @@
+Logging Out Users:
+-----------------
+-> We can view protected routes only when we're logged in
+-> To logout of the application, we'd have to manually delete that jwt cookie
+-> But we can't guarantee that our users are going to know how to do that, to go into the application tab and delete that cookie to logout, so that's not going to work
+-> So we need to create a logout route and it should take care of all these things
+Eg:
+---
+router.delete('logout', (req,res,next) => {
+	res.cookie('jwt', '', {maxAge:1});	//replacing jwt with empty string and maximumAge with 1 millisecond
+	res.redirect('/');
+})
+

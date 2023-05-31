@@ -1,0 +1,65 @@
+Complete guide to understanding the express-session library
+-----------------------------------------------------------
+-> Cookie has its data stored in the browser and that browser is going to attach that cookie(key-value pair) to every HTTP request that it does
+-> Session on the other hand is going to be stored on the server-side(i.e., ExpressJS application)
+
+-> The Express Session is going to store a little-bit bigger types of data and in a Cookie we can't put a whole lot of data and it gets very tedious if we're constantly adding more and more data to the cookie that we're attaching to each request
+-> So it would make sense to put that in a server-side session where we can store much larger amounts of data, in-addition a server-side session is advantageous because with a Cookie we cannot store any sort of 'user credentials' or 'secret information'
+-> If we did that then a hacker could easily get ahold of that information and steal personal data
+-> So the benefit of a session is basically the fact that we have it on our server-side and we're actually authenticating into the session with a secret-key
+
+
+connect-mongo  -> A mongoDB-based session store
+
+
+-> Session is used to store information about a particular user moving throughout the browser or a client and so we can potentially get up to a decent amount of information and therefore in a production environment it would be useful to have an actual database storing that information
+-> The default express-session middleware just comes with its own implementation of a session store but it's not using a database it's just using in memory or memory that's local to our application and it's not going to be a scaleable solution
+-> So what we need to do is set up an actual session store which is a fancy way of saying we need to connect our database to the express-session middleware
+Eg:
+---
+const express = require('express');
+const mongoose = require('mongoose');
+const session = require('express-session');
+
+const MongoStore = require('connect-mongo')(session);
+
+const app = express();
+
+const dbString = "..."; //DBurl
+const dbOptions = {
+	useNewURlParser: true,
+	useUnifiedTopology: true
+}
+
+const connection = mongoose.createConnection(dbString,dbOptions);
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+const sessionStore = new MongoStore({
+	mongooseConnection: connection,
+	collection: 'sessions'
+});
+
+app.use(session({
+	secret: 'some secret',
+	resave: false,
+	saveUninitialized: true,
+	store: sessionStore,
+	cookie: {
+		maxAge: 1000 * 60 * 60 * 24;	//Equals 1 day
+	}
+}));
+
+app.get('/', (req,res,next) => {
+	....
+});
+
+app.listen(3000);
+
+
+-> All the session details will be stored inside the 'sessions' collection in the DB
+
+
+
+

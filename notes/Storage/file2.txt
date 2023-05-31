@@ -1,0 +1,79 @@
+HTTP Headers and Cookies
+------------------------
+HTTP Header :
+-------------
+-> It's something that we don't spend a lot of time trying to learn and we frankly don't need to learn a whole lot about them
+-> We do need to specifically learn about an HTTP Header called the set-cookie in the cookie header in order to understand how server-side sessions work and interact with the browser
+
+-> Open up developer console in Google Chrome and go to the network tab and access to google.com
+-> We're basically doing a GET request to google.com and we'll see a bunch of stuff loading, a lot of these are the resources that run the page or scripts
+-> At the top of network tab, we can see www.google.com, if we click on that we'll see that there are some headers
+
+-> Headers come in 3 basic categories:
+	(i) The General Headers	   -	these can be either request or response related, they're just kind of general meta data about the request such as what is the URL that we're 
+					requesting, what type of method are we using, status code etc.,
+	(ii) Response Headers
+	(iii) Request Headers
+
+-> To understand what a cookie is and how it works, we need to focus/know more about the Request and the Response Headers
+
+-> If we think about an HTTP-Client, it could be anything from an IOT device, someone like us sitting at the desk or at a coffee shop we could think of it as just a laptop or a phone, 
+   pretty much anything that connects to the Internet is considered an HTTP-Client 
+
+-> We will have several things that kind of mix between the requests and response
+
+-> In a particular situation, when we searches google.com, the browser creates a request header which is basically instructions for the server saying what type of data the request wants
+
+-> The user-agent tells us what browser is requesting the data
+
+-> We know that HTTP headers are basically meta-data about our HTTP request 
+-> We can also do that on the response side which would be set by the server which in this case is Google
+-> So one of Google servers which ever gives us the content that we'll view on the web will set the response headers and these response headers will give additional instructions 
+   to the client that requested the data
+
+-> set-cookie header basically gives us the key-value pairs
+
+-> The easiest way to understand what a cookie is and how it works is to remember that HTTP protocol is a stateless protocol, in other words it's going to constantly forget what the user 
+   has done on the site unless we have a way to remember that, so in other words if we go to Google and sign in to Google then the Google server cinsiders the client that just signed in 
+   gave us valid credentials and so what we want to do is to send something back that allows the browser to remember that this user has logged in 
+-> If we don't have anything like cookies or local storage probably more modern way to do it, if we don't have these types of persistent storage then every time we refresh the page our 
+   state that we had previously where Google considered we logged-in is going to have to be redone 
+-> So every time we refresh the page we're gonna have to enter your login credentials which of course is a terrible user experience and any site that does that is gonna lose their users 
+   immediately because they're gonna get completely tired of typing in their login credentials 
+-> So this is where the set-cookie and cookie headers comes into picture
+
+Eg:
+-> At the moment, when our browser has no cookie is set, we can come back to the network tab and refresh the page
+-> We'll see that we had the google.com and we can open up the response and request headers
+-> In the request headers, it's pretty much the same as what we had before
+-> In the response headers, we once again have these set-cookie headers and what these are doing is, basically just assume may be we just logged-in and Google wants to tell the browser
+   that the client is logged-in and we don't need to really sign-in every time when we've refreshed the page
+-> So what happens is, we have these set-cookie headers and what our browser will do is it says now we have a cookie-set so every request that we make within this domain(google.com in 
+   this case) want to attach those cookies that were set based on this set-cookie HTTP header in the response header 
+-> So what's going to happen is when we press refresh again, it's going to actually put the stored cookies that the Google server had put into our browser in the request headers 
+
+-> When we reload the page, Google Chrome browser or any browser for that matter is gonna say my default behavior is this is to look up what cookies are currently set in my browser
+and attach those cookies to every single request for the domain context that it is applicable to which is google.com in this matter
+-> The browser just attaching the cookie to each request is a really powerful thing when it comes to user authentication
+-> Maybe the server can do some sort of logic and say is the user is valid or invalid
+-> If they authenticated correctly then will set the cookie header in the response object and then the browser every time it reloads will attach that cookie and we don't have to re-login 
+   with that user again
+
+Q) And now the real question is how long do we keep that user logged in ?
+-> That's a totally arbitrary question but we can do that with the expires piece of the set-cookie HTTP header 
+
+	var date = new Date();
+	date.setTime(date.getTime() + 20000); // adding 20 seconds
+	document.cookie = "custom2=value; expires=" + date.toUTCString() + ";"	// custom2=value; expires=Wed, 01 Jan 2020 22:11:26 GMT;
+
+-> The cookie actually will drop off after 20 seconds and it will no longer be attached to the HTTP request and that user will say that that was a cookie that gave a user or the clients 
+   authentication status that's gone and the user has to re-login in now 
+
+
+
+
+
+
+
+
+

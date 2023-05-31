@@ -1,0 +1,38 @@
+Checking the Current User:
+-------------------------
+-> To check the current user who is logged in
+
+//checking the current user
+router.get('/checkuser', (req,res,next) => {
+    const token = req.cookies.jwt;
+
+    if(token) {
+	jwt.verify(token, 'secret key', async (err, decodedToken)=> {
+		if(err) {
+			console.log(err.message);
+			res.locals.user = null;
+			next();
+		}
+		else {
+			console.log(decodedToken);
+			let user = User.findById(decodedToken.id);
+			res.locals.user = user; 
+			next();
+		}
+	})
+    }
+    else {
+      res.locals.user = null;
+	next();  
+    }
+});
+
+
+Note:
+-----
+-> app.get('*', checkuser);	//applies to all the get requests
+
+
+
+
+

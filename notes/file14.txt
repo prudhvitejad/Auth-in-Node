@@ -1,0 +1,20 @@
+Conditional Rendering:
+---------------------
+-> '<%' Opening tag for ejs template engine
+-> '%>' Closing tag for ejs template engine
+-> '<% =variableName %>' to use a variable value
+
+Eg:
+---
+<ul>
+	<% if(user) { %>
+		<li>Welcome, <%= user.email %> </li>
+		<li><a href='/logout'>Log Out</a> </li>
+	<% } else { %>
+		<li><a href='/login'>Log in</a> </li>
+		<li><a href='/signup' class='btn'>Sign Up</a> </li>
+	<% } %>
+</ul>
+
+
+

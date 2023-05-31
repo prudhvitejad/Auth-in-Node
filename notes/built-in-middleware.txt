@@ -1,0 +1,78 @@
+app.use(express.static("public")) :
+----------------------------------
+-> express.static() is a static middleware
+-> To serve static files such as images, CSS files, JavaScript files etc., to the browser, we use the express.static() built-in middleware function in Express.
+
+Eg: app.use(express.static('public'))
+
+-> Now, we can load the files that are in the public directory:
+
+	http://localhost:3000/images/kitten.jpg
+	http://localhost:3000/css/style.css
+	http://localhost:3000/js/app.js
+	http://localhost:3000/images/bg.png
+	http://localhost:3000/hello.html
+
+-> To use multiple static assets directories, call the express.static middleware function multiple times:
+
+	app.use(express.static('public'))
+	app.use(express.static('files'))
+
+-> To create a virtual path prefix (where the path does not actually exist in the file system) for files that are served by the express.static function, specify a mount path for the static directory, as shown below:
+
+	app.use('/static', express.static('public'))
+
+-> Now, we can load the files that are in the public directory from the /static path prefix.
+
+	http://localhost:3000/static/images/kitten.jpg
+	http://localhost:3000/static/css/style.css
+	http://localhost:3000/static/js/app.js
+	http://localhost:3000/static/images/bg.png
+	http://localhost:3000/static/hello.html
+
+
+
+app.use(express.json()) :
+-------------------------
+-> express.json() is a method in built-in express to recognize the incoming Request Object as a JSON Object. 
+-> This method is called as a middleware in our application using the code: 
+	app.use(express.json());
+-> express.json() is a parser middleware and we don't need to import anything else, it comes along with express
+-> What does this do is, well basically it takes any json data that comes along with a request and it passes it into a javascript object for us so that we can then use it inside the
+code and it attaches that object with that data for us to the request object so that we can access it in our request handlers
+-> express.json() expects request data to be sent in JSON format, which often resembles a simple JS object:
+
+	Eg: {"Name": "Pikachu", "Type": "Banana", "Number In Stable": 12}
+
+
+
+app.use(express.urlencoded()) :
+-------------------------------
+-> express.urlencoded() is a method inbuilt in express to recognize the incoming Request Object as strings or arrays. 
+-> This method is called as a middleware in our application using the code: 
+	app.use(express.urlencoded());
+
+	// parse application/x-www-form-urlencoded, basically can only parse incoming Request Object if strings or arrays
+	app.use(express.urlencoded({ extended: false }));
+
+	// parse incoming Request Object if object, with nested objects, or generally any type.
+	app.use(express.urlencoded({ extended: true }));
+
+-> extended option allows choosing between parsing the URL-encoded data with the query string library (when false) or the qs library (when true).
+-> express.urlencoded middleware is used only for parsing request body of content-type x-www-form-urlencoded
+Eg: Assuming we have an app running on port 8080, and we have a request like:
+	curl -d"foo=bar" -H"Content-Type: application/x-www-form-urlencoded" http://localhost:8080
+
+-> We will only be able to access req.body.foo if we have the express.urlencoded middleware.
+-> express.urlencoded() expects request data to be sent encoded in the URL, usually in strings or arrays:
+	
+	Eg: .../Name=Pikachu&Type=Banana&Number+In+Stable=12
+
+
+
+
+
+
+
+
+
