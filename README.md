@@ -1,4 +1,4 @@
-
+ 
 # Auth in Node
 
 - [Middleware](#Middleware)
@@ -24,11 +24,11 @@
 - [MVC(Model View Controller) Pattern](#MVC(Model-View-Controller)-Pattern)
 
 ### Middleware
--> Middleware is a function or program or something that is going to run b/w the time that the server gets the request and the time that the server sends the request out to the client
--> next is a function and all we need to do with the next function is we should/can call it
--> next() means go to next request handler
--> if we define a function and declared it as a middleware using app.use(<functionName>) in the top of all routes then it becomes the Global Middleware and  it will be called before any of the route is called and then the actual route will be called
--> if we define a function and declared it as a middleware using app.use(<functionName>) in the bottom of all routes then first the actual route is called and if that route is calling next() then that middleware will be called
+-> Middleware is a function or program or something that is going to run b/w the time that the server gets the request and the time that the server sends the request out to the client <br/>
+-> next is a function and all we need to do with the next function is we should/can call it <br/>
+-> next() means go to next request handler <br/>
+-> if we define a function and declared it as a middleware using app.use(<functionName>) in the top of all routes then it becomes the Global Middleware and  it will be called before any of the route is called and then the actual route will be called <br/>
+-> if we define a function and declared it as a middleware using app.use(<functionName>) in the bottom of all routes then first the actual route is called and if that route is calling next() then that middleware will be called <br/>
 -> we can use middleware functions in routes-level also, if we define a function and if we call that middleware function in the route then that middleware would be called first and then the actual route
 
 Eg:(i)
