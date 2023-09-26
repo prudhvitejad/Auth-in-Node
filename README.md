@@ -920,9 +920,9 @@ router.get('/checkuser', (req,res,next) => {
 
 ## Conditional-Rendering
 
--> '<%' Opening tag for ejs template engine
--> '%>' Closing tag for ejs template engine
--> '<% =variableName %>' to use a variable value
+-> '<%' Opening tag for ejs template engine <br/>
+-> '%>' Closing tag for ejs template engine <br/>
+-> '<% =variableName %>' to use a variable value <br/>
 
 Eg:
 ```
